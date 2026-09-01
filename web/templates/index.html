@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}PhantomGuard AI — Scan{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero-kicker">REGIONAL-LANGUAGE PHISHING &amp; SCAM DEFENSE</div>
+  <h1 class="hero-title">Understand the Scam.<br>Explain the Risk.<br><span class="accent">Stop the Attack.</span></h1>
+  <p class="hero-sub">Paste a message or URL, or upload a screenshot / QR code. PhantomGuard analyzes it in Tamil or English and explains the risk in plain language.</p>
+</section>
+
+<section class="stats-strip">
+  <div class="stat-card"><div class="stat-num">{{ stats.total_scans }}</div><div class="stat-label">Total Scans</div></div>
+  <div class="stat-card"><div class="stat-num">{{ stats.threats_detected }}</div><div class="stat-label">Threats Detected</div></div>
+  <div class="stat-card"><div class="stat-num critical">{{ stats.critical }}</div><div class="stat-label">Critical</div></div>
+  <div class="stat-card">
+    <div class="stat-num small">
+      {% for lang, count in stats.by_language.items() %}<span class="lang-chip">{{ lang }} {{ count }}</span>{% endfor %}
+      {% if not stats.by_language %}<span class="lang-chip dim">no data yet</span>{% endif %}
+    </div>
+    <div class="stat-label">By Language</div>
+  </div>
+</section>
+
+<section class="scan-panel glass">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="text">Message / URL</button>
+    <button class="tab-btn" data-tab="screenshot">Screenshot</button>
+    <button class="tab-btn" data-tab="qr">QR Code</button>
+  </div>
+
+  <div class="tab-content active" id="tab-text">
+    <form action="{{ url_for('scan_text') }}" method="post">
+      <textarea name="text" rows="5" placeholder="Paste a message, SMS, WhatsApp text, or URL here... (English, Tamil, or mixed)" required></textarea>
+      <button type="submit" class="btn-primary">
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        Analyze
+      </button>
+    </form>
+    <div class="example-row">
+      <span class="example-label">Try an example:</span>
+      <button class="example-chip" data-example="உங்கள் வங்கி கணக்கு முடக்கப்படும். KYC update செய்ய இந்த link-ஐ click செய்யவும் https://sbi-kyc-security-update.example.com/login">Tamil KYC phishing</button>
+      <button class="example-chip" data-example="Congratulations! You have won Rs 50,000 in the lucky draw. Pay Rs 499 processing fee to claim your prize now: http://amazon-prize-claim.com/pay">Lottery scam</button>
+      <button class="example-chip" data-example="Hey, are we still on for lunch tomorrow? Let me know!">Safe message</button>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-screenshot">
+    <form action="{{ url_for('scan_screenshot') }}" method="post" enctype="multipart/form-data">
+      <label class="dropzone">
+        <input type="file" name="screenshot" accept="image/*" required>
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M4 8h3l2-2h6l2 2h3v11H4V8z"/><circle cx="12" cy="13" r="3.5"/></svg>
+        <span>Upload a screenshot of the scam message</span>
+      </label>
+      <button type="submit" class="btn-primary">
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        Analyze Screenshot
+      </button>
+    </form>
+  </div>
+
+  <div class="tab-content" id="tab-qr">
+    <form action="{{ url_for('scan_qr') }}" method="post" enctype="multipart/form-data">
+      <label class="dropzone">
+        <input type="file" name="qr_image" accept="image/*" required>
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/></svg>
+        <span>Upload a QR code image</span>
+      </label>
+      <button type="submit" class="btn-primary">
+        <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        Analyze QR
+      </button>
+    </form>
+  </div>
+</section>
+
+{% if history %}
+<section class="recent-section">
+  <div class="section-head"><h2>Recent Scans</h2><a href="{{ url_for('history') }}" class="see-all">See all &rarr;</a></div>
+  <div class="history-grid">
+    {% for h in history %}
+    <a href="{{ url_for('view_result', scan_id=h.scan_id) }}" class="history-card level-{{ h.risk_level|lower }}">
+      <div class="hc-top">
+        <span class="hc-score">{{ h.risk_score }}</span>
+        <span class="hc-level">{{ h.risk_level }}</span>
+      </div>
+      <div class="hc-category">{{ h.scam_category }}</div>
+      <div class="hc-preview">{{ h.raw_input_preview[:70] }}{% if h.raw_input_preview|length > 70 %}...{% endif %}</div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

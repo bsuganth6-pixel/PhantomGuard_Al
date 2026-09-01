@@ -1,0 +1,27 @@
+{
+  "_comment": "STARTER Tamil keyword set. Deliberately small and conservative -- this is a v0 seed list built from common phishing patterns, not a validated NLP resource. It should be reviewed and expanded by a native Tamil speaker before this signal is trusted at production weight. Matches on Tamil-script substrings; code-mixed EN/TA text (e.g. 'KYC update seiyavum') is handled by running the English matcher on the same string in parallel -- see social_engineering.py.",
+  "urgency": [
+    "உடனடியாக", "உடனே", "இன்றே", "விரைவில்", "கடைசி வாய்ப்பு"
+  ],
+  "account_threat": [
+    "முடக்கப்படும்", "முடக்கப்பட்டது", "நிறுத்தப்படும்", "இடைநிறுத்தப்படும்", "கணக்கு முடக்கம்"
+  ],
+  "reward_bait": [
+    "வாழ்த்துக்கள்", "பரிசு", "இலவசம்", "வென்றீர்கள்", "ஜெயித்தீர்கள்"
+  ],
+  "credential_request": [
+    "கடவுச்சொல்", "கடவுச் சொல்"
+  ],
+  "kyc_request": [
+    "சரிபார்க்க", "புதுப்பிக்க", "உறுதிப்படுத்த"
+  ],
+  "payment_request": [
+    "பணம் அனுப்ப", "பணம் செலுத்த", "கட்டணம் செலுத்த"
+  ],
+  "fear_threat": [
+    "பயம்", "மிரட்டல்", "சட்ட நடவடிக்கை"
+  ],
+  "bank_finance": [
+    "வங்கி", "கணக்கு", "பேங்க்"
+  ]
+}

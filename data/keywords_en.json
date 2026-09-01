@@ -1,0 +1,61 @@
+{
+  "_comment": "Deterministic keyword/phrase signals for English text. Each category maps to a manipulation tactic used by the social-engineering detector. Matching is case-insensitive, word-boundary aware.",
+  "urgency": [
+    "urgent", "immediately", "act now", "act fast", "expires today", "expiring today",
+    "within 24 hours", "within 12 hours", "last chance", "final notice", "final warning",
+    "right away", "as soon as possible", "asap", "time sensitive", "before it's too late",
+    "limited time"
+  ],
+  "account_threat": [
+    "account will be blocked", "account blocked", "account suspended", "account deactivated",
+    "account will be suspended", "account frozen", "account closed", "will be permanently closed",
+    "temporarily suspended", "account locked", "service will be discontinued"
+  ],
+  "reward_bait": [
+    "congratulations", "you have won", "you've won", "you are a winner", "lucky winner",
+    "cashback", "reward points", "free gift", "claim your prize", "selected winner",
+    "lucky draw", "you have been selected"
+  ],
+  "authority_impersonation": [
+    "rbi", "reserve bank of india", "income tax department", "cyber cell", "cyber crime",
+    "police department", "customs department", "court notice", "legal notice",
+    "government of india", "ministry of"
+  ],
+  "otp_request": [
+    "otp", "one time password", "verification code", "share the otp", "share otp",
+    "enter otp", "confirm otp"
+  ],
+  "credential_request": [
+    "password", "pin number", "cvv", "atm pin", "net banking password", "login credentials",
+    "card number", "expiry date and cvv", "confirm your pin"
+  ],
+  "kyc_request": [
+    "kyc", "update your kyc", "kyc update", "kyc verification", "re-kyc", "kyc expired",
+    "complete your kyc", "kyc pending", "verify your account", "verify your identity",
+    "update your details"
+  ],
+  "payment_request": [
+    "processing fee", "advance payment", "pay now", "transfer the amount", "send money",
+    "activation fee", "unlock fee", "refundable deposit", "courier charges", "customs fee",
+    "delivery fee", "pay the amount", "pay the pending", "make the payment", "clear the due",
+    "outstanding amount", "pending amount", "registration fee"
+  ],
+  "job_scam": [
+    "work from home", "earn from home", "part time job", "job offer", "hiring now",
+    "no experience required", "daily payout", "earn per day", "data entry job"
+  ],
+  "lottery_scam": [
+    "lottery", "lucky draw winner", "jackpot", "sweepstakes", "prize money"
+  ],
+  "investment_scam": [
+    "guaranteed returns", "double your money", "high returns", "risk free investment",
+    "guaranteed profit", "trading tips", "investment opportunity", "multiply your money"
+  ],
+  "delivery_scam": [
+    "package is held", "parcel is on hold", "delivery failed", "reschedule your delivery",
+    "customs clearance", "shipment on hold", "pay customs duty"
+  ],
+  "romance_scam": [
+    "i love you", "my dear", "trust me my love", "send gift card", "emergency fund needed"
+  ]
+}

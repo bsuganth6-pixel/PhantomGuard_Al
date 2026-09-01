@@ -1,0 +1,15 @@
+{
+  "_comment": "Rule-based scam category classifier. 'signals' lists social-engineering keyword categories (from keywords_en.json / keywords_ta.json) that, when present, vote for this scam category. First category by vote count wins; ties broken by 'priority' (lower = higher priority).",
+  "categories": [
+    {"id": "kyc_banking_phishing", "label": "KYC / Banking Phishing", "signals": ["kyc_request", "account_threat", "bank_finance"], "priority": 1},
+    {"id": "credential_phishing", "label": "Credential Phishing", "signals": ["credential_request", "otp_request"], "priority": 2},
+    {"id": "upi_payment_scam", "label": "UPI / Payment Scam", "signals": ["payment_request"], "priority": 3},
+    {"id": "job_scam", "label": "Job Scam", "signals": ["job_scam"], "priority": 4},
+    {"id": "investment_scam", "label": "Investment Scam", "signals": ["investment_scam"], "priority": 5},
+    {"id": "lottery_scam", "label": "Lottery / Prize Scam", "signals": ["lottery_scam", "reward_bait"], "priority": 6},
+    {"id": "delivery_scam", "label": "Delivery / Courier Scam", "signals": ["delivery_scam"], "priority": 7},
+    {"id": "government_impersonation", "label": "Government Impersonation", "signals": ["authority_impersonation", "fear_threat"], "priority": 8},
+    {"id": "romance_scam", "label": "Romance Scam", "signals": ["romance_scam"], "priority": 9},
+    {"id": "generic_phishing", "label": "Generic Phishing / Scam", "signals": [], "priority": 99}
+  ]
+}

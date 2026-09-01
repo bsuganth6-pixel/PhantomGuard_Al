@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Scan History — PhantomGuard AI{% endblock %}
+{% block content %}
+<section class="history-page">
+  <h1 class="page-title">Threat History</h1>
+  {% if history %}
+  <div class="history-table glass">
+    <div class="ht-row ht-head">
+      <span>Score</span><span>Level</span><span>Category</span><span>Language</span><span>Type</span><span>Preview</span>
+    </div>
+    {% for h in history %}
+    <a href="{{ url_for('view_result', scan_id=h.scan_id) }}" class="ht-row level-{{ h.risk_level|lower }}">
+      <span class="ht-score">{{ h.risk_score }}</span>
+      <span class="ht-level">{{ h.risk_level }}</span>
+      <span>{{ h.scam_category }}</span>
+      <span>{{ h.language_primary }}</span>
+      <span>{{ h.input_type }}</span>
+      <span class="ht-preview">{{ h.raw_input_preview[:60] }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="dim-text">No scans yet. <a href="{{ url_for('index') }}">Run your first scan.</a></p>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,6 @@
+screenshots/
+tests/
+Dockerfile
+.git/
+__pycache__/
+*.pyc

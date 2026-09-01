@@ -1,0 +1,30 @@
+# PhantomGuard AI -- MVP dependencies
+# Core
+Flask==3.1.3
+Pillow==12.1.1
+pytesseract==0.3.13
+opencv-python-headless==4.13.0.92
+numpy==2.4.4
+gunicorn==23.0.0
+
+# Standard library covers the rest deliberately (difflib for fuzzy brand
+# matching, sqlite3 for storage, argparse for the CLI) -- see README for
+# why that's a design choice, not an oversight.
+
+# System dependency (not pip-installable): Tesseract OCR binary
+#   Ubuntu/Debian: sudo apt install tesseract-ocr tesseract-ocr-tam
+#   (tesseract-ocr-tam enables Tamil OCR -- this dev sandbox only had
+#    tesseract-ocr-eng available, see core/ocr_service.py)
+#
+# NOTE on Vercel: Vercel's Python runtime has no apt/system-package step,
+# so this binary can't be installed there -- pytesseract calls will fail
+# and the /scan/screenshot route degrades to "OCR failed: ..." instead of
+# extracting text (core/ocr_service.py already catches this; it won't
+# crash the app, the screenshot-OCR feature just won't work on Vercel).
+# The Dockerfile in this repo (which does `apt install tesseract-ocr
+# tesseract-ocr-tam`) is the deployment target where OCR, Tamil included,
+# actually works -- e.g. Render/Railway/Fly/a VM, or Vercel only if you
+# swap this route for an external OCR API.
+#
+# gunicorn is only used by the Dockerfile's CMD for that deployment path;
+# Vercel supplies its own WSGI entrypoint (see index.py) and ignores it.

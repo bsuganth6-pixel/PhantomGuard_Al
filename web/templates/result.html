@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Scan Result — PhantomGuard AI{% endblock %}
+{% block content %}
+
+<section class="result-page">
+  <div class="result-top glass level-{{ r.risk.risk_level|lower }}">
+    <div class="ring-block">
+      {% set ring_colors = {'SAFE': '#16A34A', 'LOW': '#EAB308', 'SUSPICIOUS': '#F97316', 'HIGH': '#DC2626', 'CRITICAL': '#B91C1C'} %}
+      <div class="risk-ring" style="--pct: {{ r.risk.total_score }}; --ring-color: {{ ring_colors.get(r.risk.risk_level, '#DC2626') }};">
+        <div class="ring-inner">
+          <span class="ring-score">{{ r.risk.total_score }}</span>
+          <span class="ring-max">/100</span>
+        </div>
+      </div>
+      <div class="risk-level-badge level-{{ r.risk.risk_level|lower }}">{{ r.risk.risk_level }}</div>
+    </div>
+    <div class="result-meta">
+      <div class="meta-row"><span class="meta-k">Scam Type</span><span class="meta-v">{{ r.scam_category.category_label }}</span></div>
+      <div class="meta-row"><span class="meta-k">Language</span><span class="meta-v">{{ r.language.primary_name }}{% if r.language.is_code_mixed and r.language.primary != 'mixed' %} (code-mixed){% endif %}</span></div>
+      <div class="meta-row"><span class="meta-k">Input Type</span><span class="meta-v">{{ r.input_type|capitalize }}</span></div>
+      <div class="meta-row"><span class="meta-k">Summary</span><span class="meta-v">{{ r.explanation.english_summary }}</span></div>
+    </div>
+  </div>
+
+  {% if r.explanation.tamil_summary %}
+  <div class="tamil-explain glass">
+    <div class="te-label">தமிழில் விளக்கம் &middot; In Tamil</div>
+    <p class="te-text">{{ r.explanation.tamil_summary }}</p>
+  </div>
+  {% endif %}
+
+  <div class="grid-2col">
+    <div class="glass panel-block">
+      <h3><svg class="i" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>Why This Score</h3>
+      {% if r.risk.evidence %}
+      <ul class="evidence-list">
+        {% for e in r.risk.evidence %}<li>{{ e }}</li>{% endfor %}
+      </ul>
+      {% else %}
+      <p class="dim-text">No risk indicators were detected in this input.</p>
+      {% endif %}
+    </div>
+
+    <div class="glass panel-block">
+      <h3><svg class="i" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 2L4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5l-8-3z"/></svg>Recommended Action</h3>
+      <ul class="action-list">
+        {% for a in r.explanation.recommended_actions %}<li>{{ a }}</li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  {% if r.urls %}
+  <div class="glass panel-block">
+    <h3><svg class="i" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M9 15l6-6M8 13l-2 2a4 4 0 105.5 5.5l2-2M16 11l2-2a4 4 0 00-5.5-5.5l-2 2"/></svg>URL / Domain Analysis</h3>
+    {% for u in r.urls %}
+    <div class="url-finding">
+      <div class="uf-top">
+        <code class="uf-url">{{ u.url }}</code>
+        <span class="uf-score score-{{ 'hi' if u.score_0_100 >= 50 else 'lo' }}">{{ u.score_0_100 }}/100</span>
+      </div>
+      {% if u.evidence %}
+      <ul class="uf-evidence">{% for e in u.evidence %}<li>{{ e }}</li>{% endfor %}</ul>
+      {% else %}
+      <p class="dim-text small">No suspicious structural indicators found for this URL.</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if r.social_engineering.label_summary %}
+  <div class="glass panel-block">
+    <h3><svg class="i" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M9 4a3 3 0 00-3 3v1a3 3 0 00-1 5.6V15a3 3 0 003 3h1M15 4a3 3 0 013 3v1a3 3 0 011 5.6V15a3 3 0 01-3 3h-1M9 4v14M15 4v14"/></svg>Manipulation Signals Detected</h3>
+    <div class="chip-row">
+      {% for label in r.social_engineering.label_summary %}<span class="signal-chip">{{ label }}</span>{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if r.ocr_note %}
+  <div class="glass panel-block muted-block">
+    <h3><svg class="i" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M4 8h3l2-2h6l2 2h3v11H4V8z"/><circle cx="12" cy="13" r="3.5"/></svg>OCR Note</h3>
+    <p class="dim-text">{{ r.ocr_note }}</p>
+    {% if r.extracted_text %}<div class="ocr-extract">"{{ r.extracted_text }}"</div>{% endif %}
+  </div>
+  {% endif %}
+
+  <div class="report-block glass">
+    <span>Was this actually a scam?</span>
+    <form action="{{ url_for('report_scam', scan_id=r.scan_id) }}" method="post" class="report-form">
+      <button type="submit" name="was_scam" value="yes" class="btn-report yes">Yes, report it</button>
+      <button type="submit" name="was_scam" value="no" class="btn-report no">No</button>
+    </form>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Error — PhantomGuard AI{% endblock %}
+{% block content %}
+<section class="error-page glass">
+  <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.6"><path d="M12 3l10 18H2L12 3z"/><line x1="12" y1="10" x2="12" y2="15"/></svg>
+  <p>{{ message }}</p>
+  <a href="{{ url_for('index') }}" class="btn-primary">Back to Scan</a>
+</section>
+{% endblock %}

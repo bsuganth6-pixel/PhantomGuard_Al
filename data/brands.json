@@ -1,0 +1,26 @@
+{
+  "_comment": "Brands commonly impersonated in Indian phishing/scam campaigns. Used for fuzzy brand-mention vs domain-mismatch detection. Not exhaustive -- extend as real scam samples are collected.",
+  "banking": [
+    "sbi", "state bank of india", "hdfc", "hdfc bank", "icici", "icici bank",
+    "axis bank", "axis", "kotak", "kotak mahindra", "pnb", "punjab national bank",
+    "bank of baroda", "canara bank", "union bank", "indian bank", "yes bank",
+    "idfc first", "rbl bank"
+  ],
+  "payments": [
+    "paytm", "phonepe", "google pay", "gpay", "bhim", "upi", "amazon pay",
+    "mobikwik", "freecharge", "razorpay"
+  ],
+  "ecommerce": [
+    "amazon", "flipkart", "myntra", "meesho", "ajio", "snapdeal"
+  ],
+  "government": [
+    "income tax department", "income tax", "irctc", "epfo", "aadhaar",
+    "uidai", "digilocker", "passport seva", "gst", "customs"
+  ],
+  "logistics": [
+    "india post", "indiapost", "bluedart", "delhivery", "dtdc", "fedex", "dhl"
+  ],
+  "telecom": [
+    "jio", "airtel", "vodafone", "vi", "bsnl"
+  ]
+}

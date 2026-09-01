@@ -1,0 +1,24 @@
+{
+  "_comment": "Local, offline threat-intelligence dataset. Feeds the 'Reputation' signal in the risk engine so the product still functions if no external intelligence API is available (see docs: 'local demo threat dataset keeps the product functional offline'). This is a small curated/synthetic set for the MVP demo, not a live feed.",
+  "known_scam_domains": [
+    "secure-sbi-verify.com",
+    "sbi-kyc-verify.com",
+    "sbi-kyc-security-update.example.com",
+    "sbi-kyc-update.net",
+    "hdfc-verify-account.com",
+    "icici-secure-login.net",
+    "paytm-kyc-update.com",
+    "amazon-prize-claim.com",
+    "irctc-refund-claim.net",
+    "indiapost-parcel-hold.com"
+  ],
+  "suspicious_tlds": [
+    ".xyz", ".top", ".club", ".work", ".click", ".loan", ".gq", ".tk", ".ml", ".cf", ".zip", ".rest"
+  ],
+  "url_shorteners": [
+    "bit.ly", "tinyurl.com", "t.co", "goo.gl", "ow.ly", "is.gd", "cutt.ly", "rebrand.ly", "shorturl.at"
+  ],
+  "credential_page_paths": [
+    "login", "verify", "secure", "update", "confirm", "signin", "account-verify", "kyc"
+  ]
+}
